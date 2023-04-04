@@ -6,10 +6,10 @@ Original code by bbossink for the SDM72-D-M power mether https://github.com/remc
 
 Installation: <br>
 cd ~/domoticz/plugins<br>
-git clone https://github.com/PaulMig/DDS516mrModbus-Domoticz-plugin <br>
+git clone https://github.com/PaulMig/DDS519mrModbus-Domoticz-plugin <br>
 <br>
 Configuration: <br>
-Select "Eastron DDS516mr-Modbus" in Hardware configuration screen<br>
+Select "Eastron DDS519mr-Modbus" in Hardware configuration screen<br>
 If needed modify some parameters and click add<br>
 Hint: Set reading interval to 0 if you want updates per "heartbeat" of the system (aprox 10s in my case)<br>
 <br>
