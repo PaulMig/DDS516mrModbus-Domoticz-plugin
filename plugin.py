@@ -9,7 +9,7 @@ Requirements:
     2.Communication module Modbus USB to RS485 converter module
 """
 """
-<plugin key="SDM120Modbus" name="Eastron SDM120-Modbus" version="1.0.0" author="remcovanvugt">
+<plugin key="DDS519mrModbus" name="Eastron DDS519mr-Modbus" version="1.0.0" author="remcovanvugt">
     <params>
         <param field="SerialPort" label="Modbus Port" width="200px" required="true" default="/dev/ttyUSB0" />
         <param field="Mode1" label="Baud rate" width="40px" required="true" default="9600"  />
@@ -41,7 +41,7 @@ class BasePlugin:
         self.rs485 = minimalmodbus.Instrument(Parameters["SerialPort"], int(Parameters["Mode2"]))
         self.rs485.serial.baudrate = Parameters["Mode1"]
         self.rs485.serial.bytesize = 8
-        self.rs485.serial.parity = minimalmodbus.serial.PARITY_NONE
+        self.rs485.serial.parity = minimalmodbus.serial.PARITY_EVEN
         self.rs485.serial.stopbits = 1
         self.rs485.serial.timeout = 1
         self.rs485.debug = False
@@ -49,7 +49,7 @@ class BasePlugin:
 
         self.rs485.mode = minimalmodbus.MODE_RTU
         devicecreated = []
-        Domoticz.Log("Eastron SDM120 Modbus plugin start")
+        Domoticz.Log("Eastron DDS519mr Modbus plugin start")
         self.runInterval = int(Parameters["Mode3"]) * 1 
        
         if 1 not in Devices:
@@ -75,12 +75,12 @@ class BasePlugin:
         Options = { "Custom" : "1;VA"} 
                
     def onStop(self):
-        Domoticz.Log("Eastron SDM120Modbus plugin stop")
+        Domoticz.Log("Eastron DDS519mrModbus plugin stop")
 
     def onHeartbeat(self):
         self.runInterval -=1;
         if self.runInterval <= 0:
-            # Get data from SDM72D
+            # Get data from DDS519mr
             Total_System_Power = self.rs485.read_float(84, functioncode=4, numberOfRegisters=2)
             Import_Wh = self.rs485.read_float(72, functioncode=4, numberOfRegisters=2)
             Export_Wh = self.rs485.read_float(74, functioncode=4, numberOfRegisters=2)
@@ -100,7 +100,7 @@ class BasePlugin:
             
             
             if Parameters["Mode6"] == 'Debug':
-                Domoticz.Log("Eastron SD120Modbus Data")
+                Domoticz.Log("Eastron DDS519mrModbus Data")
                 Domoticz.Log('Total system power: {0:.3f} W'.format(Total_System_Power))
                 Domoticz.Log('Import Wh: {0:.3f} kWh'.format(Import_Wh))
                 Domoticz.Log('Export Wh: {0:.3f} kWh'.format(Export_Wh))
